@@ -1,13 +1,10 @@
-// TODO: Update the name of the method loaded by the prover. E.g., if the method
-// is `multiply`, replace `METHOD_NAME_ELF` with `MULTIPLY_ELF` and replace
-// `METHOD_NAME_ID` with `MULTIPLY_ID`
-use methods::{METHOD_NAME_ELF, METHOD_NAME_ID};
+use methods::{PREF_MATCH_ELF, PREF_MATCH_ID};
 use risc0_zkvm::Prover;
 
 fn main() {
     // Make the prover.
     let mut prover =
-        Prover::new(METHOD_NAME_ELF).expect("Prover should be constructed from valid ELF binary");
+        Prover::new(PREF_MATCH_ELF).expect("Prover should be constructed from valid ELF binary");
 
     // TODO: Implement communication with the guest here
 
@@ -21,7 +18,7 @@ fn main() {
 
     // Optional: Verify receipt to confirm that recipients will also be able to
     // verify your receipt
-    receipt.verify(&METHOD_NAME_ID).expect(
+    receipt.verify(&PREF_MATCH_ID).expect(
         "Code you have proven should successfully verify; did you specify the correct method ID?",
     );
 }
