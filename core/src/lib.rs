@@ -1,13 +1,5 @@
 use std::collections::{HashMap, VecDeque};
-
 use serde::{Deserialize, Serialize};
-// #[derive(Clone, Debug, Deserialize, Serialize, PartialEq, Eq)]
-// struct Preferences<T: Serialize + Eq + PartialEq> {
-//     a: HashMap<T, Vec<T>>,
-//     b: HashMap<T, Vec<T>>,
-// }
-
-// type NormalizedPreferences = (Vec<Vec<usize>>, Vec<Vec<usize>>);
 
 #[derive(Clone, Debug, Deserialize, Eq, PartialEq, Serialize)]
 pub struct Inputs {
@@ -21,15 +13,6 @@ pub struct Output {
     pub stable_match: HashMap<u64, u64>,
 }
 
-// pub fn simplify<T: Serialize + Eq>(preferences: Preferences<T>) -> (Vec<Vec<usize>>, Vec<Vec<usize>>) {
-//     (preferences.a.into(), preferences.b.into())
-// }
-
-// impl<T: Serialize + Eq> From<Preferences<T>> for NormalizedPreferences {
-//     fn from(pref: Preferences<T>) -> NormalizedPreferences {
-//         pref.a.into_values().into_iter().map()
-//     }
-// }
 
 // TODO: use generics instead of u64, how does a user know their id? address? bytes(40)
 pub fn gale_shapley(
