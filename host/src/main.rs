@@ -10,8 +10,8 @@ fn main() {
         Prover::new(PREF_MATCH_ELF).expect("Prover should be constructed from valid ELF binary");
     // let group_a_preferences = vec![vec![0, 1, 2], vec![0, 2, 1], vec![1, 2, 0]];
     // let group_b_preferences = vec![vec![0, 1, 2], vec![2, 1, 0], vec![0, 2, 1]];
-    let group_a_preferences = gen_pref(100);
-    let group_b_preferences = gen_pref(100);
+    let group_a_preferences = gen_pref(20);
+    let group_b_preferences = gen_pref(20);
     let inputs = Inputs {
         preferences: (group_a_preferences, group_b_preferences),
         pref_hashes: vec![],
