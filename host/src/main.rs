@@ -1,4 +1,4 @@
-use matcher_core::Inputs;
+use matcher_core::{Inputs, Output};
 use methods::{PREF_MATCH_ELF, PREF_MATCH_ID};
 use risc0_zkvm::{
     serde::{from_slice, to_vec},
@@ -14,7 +14,7 @@ fn main() {
     let group_b_preferences = gen_pref(20);
     let inputs = Inputs {
         preferences: (group_a_preferences, group_b_preferences),
-        pref_hashes: vec![],
+        pref_pub_keys: vec![],
     };
     prover.add_input_u32_slice(&to_vec(&inputs).expect("input should be serializable"));
 
@@ -26,7 +26,7 @@ fn main() {
         "Code you have proven should successfully verify; did you specify the correct method ID?",
     );
     let vec = receipt.journal;
-    let matches: Vec<usize> = from_slice(&vec).unwrap();
+    let matches: Output = from_slice(&vec).unwrap();
     println!("Proven matches {matches:?}, in {:?} cycles", prover.cycles);
 }
 

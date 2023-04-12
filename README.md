@@ -28,3 +28,22 @@ Other options for preventing collusion:
   - need to guarantee that only the zk proof server can do the reveal
 
 How do you prevent the central entity from posting the preferences after the reveal? thus defeating the purpose of the zk.
+
+## Architecture
+
+On-chain: users commit to some preference hash. This is going to be input to the proof to verify that the preferences used are the ones that users actually committed to.
+
+Preference collector: server that accepts preference arrays + commitment hashes. generates a proof that they correctly ran the matching algo and used the correct inputs. Eventually, they send the matches back to the chain.
+
+## Application
+
+Whats a good use case for this?
+
+- dating apps
+- assigning partners for class project
+- marriage assignment
+- assigning nfts to people based on preference
+
+## Extensions
+
+Only reveal the actual match to the matchers. So encrypt the results with the participants public keys.

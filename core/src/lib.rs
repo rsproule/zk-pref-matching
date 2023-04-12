@@ -1,23 +1,23 @@
-use std::collections::{HashMap, VecDeque};
+use risc0_zkvm::sha::Digest;
 use serde::{Deserialize, Serialize};
+use std::collections::VecDeque;
 
 #[derive(Clone, Debug, Deserialize, Eq, PartialEq, Serialize)]
 pub struct Inputs {
-    // pub preferences: Preferences<T>,
     pub preferences: (Vec<Vec<usize>>, Vec<Vec<usize>>),
-    pub pref_hashes: Vec<String>,
+    pub pref_pub_keys: Vec<String>,
 }
 
 #[derive(Clone, Debug, Deserialize, Eq, PartialEq, Serialize)]
 pub struct Output {
-    pub stable_match: HashMap<u64, u64>,
+    pub stable_matches: Vec<usize>,
+    pub hashes: Vec<Digest>,
 }
-
 
 // TODO: use generics instead of u64, how does a user know their id? address? bytes(40)
 pub fn gale_shapley(
-    men_preferences: Vec<Vec<usize>>,
-    women_preferences: Vec<Vec<usize>>,
+    men_preferences: &Vec<Vec<usize>>,
+    women_preferences: &Vec<Vec<usize>>,
 ) -> Vec<usize> {
     let n = men_preferences.len();
     let mut men = vec![VecDeque::new(); n];
@@ -31,25 +31,25 @@ pub fn gale_shapley(
 
     while let Some(man) = free_men.pop_front() {
         if let Some(woman) = men[man].pop_front() {
-            if let Some(current_man) = women[woman] {
+            if let Some(current_man) = women[*woman] {
                 // this only works because preferences are integers,
                 // can always convert to this form if necessary
-                if women_preferences[woman]
+                if women_preferences[*woman]
                     .iter()
                     .position(|&x| x == man)
                     .unwrap()
-                    < women_preferences[woman]
+                    < women_preferences[*woman]
                         .iter()
                         .position(|&x| x == current_man)
                         .unwrap()
                 {
-                    women[woman] = Some(man);
+                    women[*woman] = Some(man);
                     free_men.push_back(current_man);
                 } else {
                     free_men.push_back(man);
                 }
             } else {
-                women[woman] = Some(man);
+                women[*woman] = Some(man);
             }
         }
     }
