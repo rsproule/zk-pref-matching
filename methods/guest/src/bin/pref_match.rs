@@ -14,6 +14,7 @@ pub fn main() {
     // that users can actually verify
     let preferences = inputs.preferences;
     let matches = gale_shapley(&preferences.0, &preferences.1);
+    // TODO: probably want to salt these hashes to prevent bruteforcing.
     let mut hashes: Vec<Digest> = Vec::new();
     for preference in preferences.0 {
         let h = Impl::hash_words(&to_vec(&preference).unwrap());
